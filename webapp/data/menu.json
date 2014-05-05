@@ -1,0 +1,13 @@
+[{
+"name":"应用中心",
+"url":"#/appCenter"
+},{
+"name":"资讯中心",
+"url":"#/information"
+},{
+"name":"中行网银",
+"url":"#/bocNet"
+},{
+"name":"个人中心",
+"url":"#/personCenter"
+}]

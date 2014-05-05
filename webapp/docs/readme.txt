@@ -1,0 +1,40 @@
+﻿在做民生小区金融网的时候，我们用yeoman生成
+angularjs的项目所有的js文件都放在index.html中
+加载，这样效率明显不好，而且一个模块的所有controller
+都放入一个js文件中，不能实现一个html碎片对应于一个
+controller.于是我便浏览各种技术网站，但是发现大多都是
+针对ng-view的angularjs与seajs或者requirejs的组合框架，
+而针对ui.router的很少，并且也不是很理想 ，于是在研究了很多框架后，知晓
+其中原理后，便自己写了个。另外得感谢那些提供开源项目的
+同道者。
+主要文件为route-analysis.js文件，具体使用可以看下项目
+这里解释下其主要方法analyze的使用
+//baseName,url,path,bool,parent
+$stateProvider.state(rap.analyze("app","app/",,true))
+其中baseName必须存在，最少存在两个参数
+1.两个参数时
+baseName url  one /one   {name:one,url:/one,templateUrl:views/one/one.html,controller:oneCtrl}
+$stateProvider.state(rap.analyze("one","/one","one/"))
+其对应的state写法为{
+	name:"one",
+	url:"/one",
+	controller:"oneCtrl",
+	templateUrl:"views/one/one.html"
+}
+当然了路径也可自行通过方法setBaseDir(viewDir,ctrlDir)及第3个参数path来设定
+$stateProvider.state(rap.analyze("app","app/",true))
+.state(rap.analyze("appCenter","/appCenter?name","app/appCenter/","app"));
+相当于
+$stateProvider.state({
+	name:"app",
+	abstract:true,
+	controller:"appCtrl",
+	templateUrl:"views/app/app.html"
+}).state({
+	name:"appCenter",
+	parent:"app",
+	url:"/appCenter?name",
+	controller:"appCenterCtrl",
+	templateUrl:"views/app/appCenter/appCenter.html"
+})
+
